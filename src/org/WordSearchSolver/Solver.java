@@ -56,4 +56,8 @@ public class Solver {
             }
         }
     }
+
+    private void recursive() {
+
+    }
 }
