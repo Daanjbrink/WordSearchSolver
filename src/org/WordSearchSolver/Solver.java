@@ -51,13 +51,74 @@ public class Solver {
             for (int j = 0; j != width; j++) {
                 // Add for loop through word map
                 if (field[j][i] == "h".charAt(0)) {
-                    // Do some recursive stuff
+                    for (Direction dir : Direction.values()) {
+                        Recursive(field, j, i, "half", dir, 1);
+                    }
                 }
             }
         }
     }
 
-    private void recursive() {
+    private void found() {
+        // Do shit with this
+        System.out.println("Found");
+    }
 
+    private void Recursive(char[][] field, int pos1, int pos2, String word, Direction dir, int atChar) {
+        if (dir == Direction.TOPLEFT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 - 1 < 0 || pos2 - 1 < 0)
+                return;
+            if (field[pos1 - 1][pos2 - 1] == word.charAt(atChar)) {
+                System.out.println("Top Left");
+                if (word.length() == atChar)
+                    found();
+                Recursive(field, pos1--, pos2--, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.TOP) {
+            if (atChar > word.length())
+                return;
+            if (pos2 - 1 < 0)
+                return;
+            if (field[pos1][pos2 - 1] == word.charAt(atChar)) {
+                System.out.println("Top");
+                if (word.length() == atChar)
+                    found();
+                Recursive(field, pos1, pos2--, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.TOPRIGHT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 + 1 > field.length || pos2 - 1 < 0)
+                return;
+            if (field[pos1 + 1][pos2 - 1] == word.charAt(atChar)) {
+                System.out.println("Top Right");
+                if (word.length() == atChar)
+                    found();
+                Recursive(field, pos1++, pos2--, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.BOTTOMRIGHT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 + 1 > field.length || pos2 + 1 > field[0].length)
+                return;
+            if (field[pos1 + 1][pos2 + 1] == word.charAt(atChar)) {
+                System.out.println("Bottom Right");
+                if (word.length() == atChar + 1) {
+                    found();
+                    return;
+                }
+                Recursive(field, pos1 + 1, pos2 + 1, word, dir, atChar + 1);
+            }
+        }
+
+        return;
     }
 }
