@@ -52,7 +52,7 @@ public class Solver {
                 // Add for loop through word map
                 if (field[j][i] == "h".charAt(0)) {
                     for (Direction dir : Direction.values()) {
-                        Recursive(field, j, i, "half", dir, 1);
+                        Recursive(field, j, i, "ha", dir, 1);
                     }
                 }
             }
@@ -72,9 +72,11 @@ public class Solver {
                 return;
             if (field[pos1 - 1][pos2 - 1] == word.charAt(atChar)) {
                 System.out.println("Top Left");
-                if (word.length() == atChar)
+                if (word.length() == atChar + 1) {
                     found();
-                Recursive(field, pos1--, pos2--, word, dir, atChar + 1);
+                    return;
+                }
+                Recursive(field, pos1 - 1, pos2 - 1, word, dir, atChar + 1);
             }
         }
 
@@ -85,9 +87,11 @@ public class Solver {
                 return;
             if (field[pos1][pos2 - 1] == word.charAt(atChar)) {
                 System.out.println("Top");
-                if (word.length() == atChar)
+                if (word.length() == atChar + 1) {
                     found();
-                Recursive(field, pos1, pos2--, word, dir, atChar + 1);
+                    return;
+                }
+                Recursive(field, pos1, pos2 - 1, word, dir, atChar + 1);
             }
         }
 
@@ -98,9 +102,71 @@ public class Solver {
                 return;
             if (field[pos1 + 1][pos2 - 1] == word.charAt(atChar)) {
                 System.out.println("Top Right");
-                if (word.length() == atChar)
+                if (word.length() == atChar + 1) {
                     found();
-                Recursive(field, pos1++, pos2--, word, dir, atChar + 1);
+                    return;
+                }
+                Recursive(field, pos1 + 1, pos2 - 1, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.LEFT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 - 1 < 0)
+                return;
+            if (field[pos1 - 1][pos2] == word.charAt(atChar)) {
+                System.out.println("Left");
+                if (word.length() == atChar + 1) {
+                    found();
+                    return;
+                }
+                Recursive(field, pos1 - 1, pos2, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.RIGHT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 + 1 > field.length)
+                return;
+            if (field[pos1 + 1][pos2] == word.charAt(atChar)) {
+                System.out.println("Right");
+                if (word.length() == atChar + 1) {
+                    found();
+                    return;
+                }
+                Recursive(field, pos1 + 1, pos2, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.BOTTOMLEFT) {
+            if (atChar > word.length())
+                return;
+            if (pos1 - 1 < 0 || pos2 + 1 > field[0].length)
+                return;
+            if (field[pos1 - 1][pos2 + 1] == word.charAt(atChar)) {
+                System.out.println("Bottom Left");
+                if (word.length() == atChar + 1) {
+                    found();
+                    return;
+                }
+                Recursive(field, pos1 - 1, pos2 + 1, word, dir, atChar + 1);
+            }
+        }
+
+        if (dir == Direction.BOTTOM) {
+            if (atChar > word.length())
+                return;
+            if (pos2 + 1 > field[0].length)
+                return;
+            if (field[pos1][pos2 + 1] == word.charAt(atChar)) {
+                System.out.println("Bottom");
+                if (word.length() == atChar + 1) {
+                    found();
+                    return;
+                }
+                Recursive(field, pos1, pos2 + 1, word, dir, atChar + 1);
             }
         }
 
@@ -118,7 +184,5 @@ public class Solver {
                 Recursive(field, pos1 + 1, pos2 + 1, word, dir, atChar + 1);
             }
         }
-
-        return;
     }
 }
