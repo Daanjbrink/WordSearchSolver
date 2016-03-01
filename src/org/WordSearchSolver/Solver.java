@@ -223,6 +223,7 @@ public class Solver {
             if (pos1 - 1 < 0 || pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
@@ -237,6 +238,7 @@ public class Solver {
             if (pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
@@ -251,6 +253,7 @@ public class Solver {
             if (pos1 + 1 > field.length || pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
