@@ -141,10 +141,6 @@ public class Solver {
         System.out.println("Found");
     }
 
-    private void found() {
-        System.out.println("Found");
-    }
-
     private void Recursive(char[][] field, int pos1, int pos2, String word, Direction dir, int atChar) {
         if (dir == Direction.TOPLEFT) {
             if (atChar > word.length())
@@ -227,7 +223,6 @@ public class Solver {
             if (pos1 - 1 < 0 || pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
-                System.out.println("BOTTOMLEFT");
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
@@ -242,7 +237,6 @@ public class Solver {
             if (pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
-                System.out.println("BOTTOM");
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
@@ -257,7 +251,6 @@ public class Solver {
             if (pos1 + 1 > field.length || pos2 + 1 > field[0].length)
                 return;
             if (field[pos1][pos2] == word.charAt(atChar)) {
-                System.out.println("BOTTOMRIGHT");
                 if (word.length() == atChar + 1) {
                     found(field);
                     return;
