@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class Solver {
     Scanner in = new Scanner(System.in);
 
+    String[][] colors;
+
     public Solver() {
 
         System.out.print("Load from file? ");
@@ -71,6 +73,7 @@ public class Solver {
 
     private void initSolve(int width, int height) {
         char[][] field = new char[width][height];
+        colors = new String[width][height];
 
         for (int i = 0; i != height; i++) {
             for (int j = 0; j != width; j++) {
@@ -94,6 +97,8 @@ public class Solver {
         int width, height;
         width = field.length;
         height = field[0].length;
+        colors = new String[width][height];
+
         for (int i = 0; i != height; i++) {
             System.out.println();
             for (int j = 0; j != width; j++) {
@@ -113,15 +118,30 @@ public class Solver {
                 // Add for loop through word map
                 if (field[j][i] == "h".charAt(0)) {
                     for (Direction dir : Direction.values()) {
-                        Recursive(field, j, i, "half", dir, 1);
+                        Recursive(field, j, i, "haa", dir, 0);
                     }
                 }
             }
         }
     }
 
+    private void found(char[][] field) {
+        int width = field.length;
+        int height = field[0].length;
+
+        for (int i = 0; i != height; i++) {
+            System.out.println();
+            for (int j = 0; j != width; j++) {
+                if (colors[j][i] != null)
+                    System.out.print((char) 27 + colors[j][i] + field[j][i] + (char) 27 + "[40m" + (char) 27 + "[37m" + " ");
+                else
+                    System.out.print(field[j][i] + " ");
+            }
+        }
+        System.out.println("Found");
+    }
+
     private void found() {
-        // Do shit with this
         System.out.println("Found");
     }
 
@@ -131,10 +151,10 @@ public class Solver {
                 return;
             if (pos1 - 1 < 0 || pos2 - 1 < 0)
                 return;
-            if (field[pos1 - 1][pos2 - 1] == word.charAt(atChar)) {
-                System.out.println("Top Left");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 - 1, pos2 - 1, word, dir, atChar + 1);
@@ -146,10 +166,10 @@ public class Solver {
                 return;
             if (pos2 - 1 < 0)
                 return;
-            if (field[pos1][pos2 - 1] == word.charAt(atChar)) {
-                System.out.println("Top");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1, pos2 - 1, word, dir, atChar + 1);
@@ -161,10 +181,10 @@ public class Solver {
                 return;
             if (pos1 + 1 > field.length || pos2 - 1 < 0)
                 return;
-            if (field[pos1 + 1][pos2 - 1] == word.charAt(atChar)) {
-                System.out.println("Top Right");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 + 1, pos2 - 1, word, dir, atChar + 1);
@@ -176,10 +196,10 @@ public class Solver {
                 return;
             if (pos1 - 1 < 0)
                 return;
-            if (field[pos1 - 1][pos2] == word.charAt(atChar)) {
-                System.out.println("Left");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 - 1, pos2, word, dir, atChar + 1);
@@ -191,10 +211,10 @@ public class Solver {
                 return;
             if (pos1 + 1 > field.length)
                 return;
-            if (field[pos1 + 1][pos2] == word.charAt(atChar)) {
-                System.out.println("Right");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                colors[pos1][pos2] = "[41m";
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 + 1, pos2, word, dir, atChar + 1);
@@ -206,10 +226,10 @@ public class Solver {
                 return;
             if (pos1 - 1 < 0 || pos2 + 1 > field[0].length)
                 return;
-            if (field[pos1 - 1][pos2 + 1] == word.charAt(atChar)) {
-                System.out.println("Bottom Left");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                System.out.println("BOTTOMLEFT");
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 - 1, pos2 + 1, word, dir, atChar + 1);
@@ -221,10 +241,10 @@ public class Solver {
                 return;
             if (pos2 + 1 > field[0].length)
                 return;
-            if (field[pos1][pos2 + 1] == word.charAt(atChar)) {
-                System.out.println("Bottom");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                System.out.println("BOTTOM");
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1, pos2 + 1, word, dir, atChar + 1);
@@ -236,10 +256,10 @@ public class Solver {
                 return;
             if (pos1 + 1 > field.length || pos2 + 1 > field[0].length)
                 return;
-            if (field[pos1 + 1][pos2 + 1] == word.charAt(atChar)) {
-                System.out.println("Bottom Right");
+            if (field[pos1][pos2] == word.charAt(atChar)) {
+                System.out.println("BOTTOMRIGHT");
                 if (word.length() == atChar + 1) {
-                    found();
+                    found(field);
                     return;
                 }
                 Recursive(field, pos1 + 1, pos2 + 1, word, dir, atChar + 1);
